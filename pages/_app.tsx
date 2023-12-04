@@ -8,11 +8,11 @@ import theme from "@/lib/theme/index";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-    <CssBaseline/>
-    <ThemeProvider theme={theme}>
-  <Component {...pageProps} />
-  </ThemeProvider>
-  
-  </>
+      <CssBaseline />
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+
+    </>
   )
 }
