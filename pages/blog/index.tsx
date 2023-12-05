@@ -1,19 +1,24 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link';
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
 import Paragraph from '@/components/Paragraph';
 import { AllPosts } from '@/lib/hygraph/queries';
 import { GetStaticProps } from 'next';
+import { ListItem,List,Card,CardMedia,CardContent,CardActions} from '@mui/material';
+
 
 // const inter = Inter({ subsets: ['latin'] })
 interface BlogProps {
   ssd: any[]; // Replace 'any' with the actual type of your blog posts
 }
 
-const { HYGRAPH_ENDPOINT, HYGRAPH_TOKEN } = process.env;
+
 const Blog:React.FC<BlogProps>=({ssd=[]}) => {
+  console.log({ssd})
   return (
+    
     <>
       <Head>
         <title>Create Next App</title>
@@ -23,11 +28,26 @@ const Blog:React.FC<BlogProps>=({ssd=[]}) => {
       </Head>
       <Layout>
       <Heading variant="h2" component="h2" >Blog List</Heading>
-        <Paragraph>
-          Use the form below to get in touch
-        </Paragraph>
-       
-        
+        <List component={"ol"} sx={{ listStyle: "none" }}>
+          {ssd.map(({ id, title, slug, heroImage}) => {
+
+            const firstImageUrl:string = heroImage[0].url
+            return(
+            <ListItem key={id}>
+              <Card component={"article"} sx={{width:'100%'}}>
+                <CardMedia>
+                  <Image alt={title} src={firstImageUrl} width="235" height="200" />
+                </CardMedia>
+                <CardContent>
+                  <Heading variant="h3" component="h2">{title}</Heading>
+                </CardContent>
+                <CardActions>
+                  <Link href={`/blog/${slug}`}>Read more...</Link>
+                </CardActions>
+              </Card>
+            </ListItem>
+          )})}
+        </List>
         </Layout>
       
     </>
@@ -35,11 +55,11 @@ const Blog:React.FC<BlogProps>=({ssd=[]}) => {
 }
 
 export const getStaticProps: GetStaticProps<BlogProps> = async () => {
-  const allPosts = await fetch(`${HYGRAPH_ENDPOINT}`, {
+  const allPosts = await fetch(`${process.env.HYGRAPH_ENDPOINT}`, {
     method: "POST",
     headers: {
       "Content-Type": `application/json; charset="UTF-8`,
-      Authorization: `Bearer ${HYGRAPH_TOKEN}`,
+      Authorization: `Bearer ${process.env.HYGRAPH_TOKEN}`,
     },
     body: JSON.stringify({
       query: AllPosts,

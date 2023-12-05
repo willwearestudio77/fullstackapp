@@ -13,7 +13,27 @@ query AllPosts {
       id
       createdAt
       updatedAt
+      slug
     }
   }
 `;
-export {AllPosts}
+
+const SinglePost = gql`
+  query SinglePost($slug: String!){
+    blog(where: { slug: $slug }) {
+      createdAt
+      title
+      id
+      slug
+      updatedAt
+      heroImage {
+        url
+        width
+        height
+      }
+      blogBody
+    }
+  }
+`;
+
+export {AllPosts,SinglePost}
