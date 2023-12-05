@@ -21,7 +21,7 @@ export default function Home() {
       </Head>
 
       <Layout>
-        <Heading component="h2" >Home Page</Heading>
+        <Heading variant="h2" component="h2" >Home Page</Heading>
         <Paragraph>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis sagittis leo, at sollicitudin nibh blandit in. Donec sit amet diam turpis. Aenean mattis sagittis augue vel placerat. Donec posuere elit sem, non varius tellus vestibulum in. Fusce auctor diam est, in eleifend quam commodo a. Proin felis libero, posuere a nisl sed, gravida condimentum turpis. Suspendisse fringilla, lacus mollis euismod eleifend, nisi neque pellentesque eros, eget congue velit tortor non est.
 
         </Paragraph>

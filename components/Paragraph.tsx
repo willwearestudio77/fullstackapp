@@ -1,6 +1,10 @@
 import { Typography } from '@/components/mui/index';
+import { ReactNode } from "react";
 
-const Paragraph = ({ children, ...props }) => {
+interface ParagraphProps {
+  children: ReactNode;
+}
+const Paragraph:React.FC<ParagraphProps> = ({ children, ...props }) => {
   return (
     <Typography paragraph {...props}>
       {children}

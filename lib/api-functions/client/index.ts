@@ -1,4 +1,11 @@
-export const sendMail = async(vals) =>{
+interface MailData {
+    from: string;
+    subject: string;
+    message: string;
+  }
+  
+
+export const sendMail = async(vals:MailData) =>{
     console.log(vals);
     try{
         const response = await fetch ("/api/contact",{

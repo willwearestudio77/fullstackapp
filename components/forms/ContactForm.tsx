@@ -5,6 +5,19 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { TextField, Button } from "@mui/material";
 
+interface ContactFormProps {
+  submitHandler: (data: {
+    from: string;
+    subject: string;
+    message: string;
+  }) => void;
+}
+interface FormValues {
+  from: string;
+  subject: string;
+  message: string;
+}
+
 const schema = yup
   .object()
   .shape({
@@ -20,8 +33,8 @@ const defaults = {
   message: "",
 };
 
-export default function ContactForm({submitHandler}) {
-  // console.log(car);
+const ContactForm:React.FC<ContactFormProps> =({submitHandler}) => {
+ 
 
   const {
     handleSubmit,
@@ -43,7 +56,7 @@ export default function ContactForm({submitHandler}) {
     marginBlockEnd: "1em",
   };
 
-  let submitFn = (vals) => {
+  let submitFn = (vals:FormValues) => {
     reset();
     console.log(vals);
     submitHandler(vals);
@@ -121,7 +134,6 @@ export default function ContactForm({submitHandler}) {
         </Button>
         <Button
           type="submit"
-          primary="true"
           variant="contained"
           disabled={isSubmitting || !isDirty || (isDirty && !isValid)}
         >
@@ -131,3 +143,4 @@ export default function ContactForm({submitHandler}) {
     </form>
   );
 }
+export default ContactForm;

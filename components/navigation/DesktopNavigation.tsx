@@ -51,6 +51,13 @@ function DesktopNavigation({
               Contact
             </Button>
             </Link>
+            <Link href={'/blog'} passHref>
+            <Button
+              sx={{ color: lightTextColor }}
+            >
+              Blog
+            </Button>
+            </Link>
           </Box>
         </Toolbar>
       </AppBar>
