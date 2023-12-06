@@ -49,7 +49,7 @@ export default function BlogPost({ ssd }:BlogPostProps) {
         <Heading variant="h2" component="h2">Single Post</Heading>
         <Card component={"article"} sx={{ width: "100%" }}>
           <CardMedia sx={{ display: "grid", placeContent: "center" }}>
-            <Image alt={title} src={imageUrl} width="200" height="200" />
+            <Image alt={title} src={imageUrl} width="200" height="200" style={{objectFit: "cover"}} />
           </CardMedia>
           <CardContent>
             <Heading variant='h2' component="h2">{title}</Heading>

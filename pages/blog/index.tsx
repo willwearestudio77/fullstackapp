@@ -33,10 +33,11 @@ const Blog:React.FC<BlogProps>=({ssd=[]}) => {
 
             const firstImageUrl:string = heroImage[0].url
             return(
+            
             <ListItem key={id}>
               <Card component={"article"} sx={{width:'100%'}}>
                 <CardMedia>
-                  <Image alt={title} src={firstImageUrl} width="235" height="200" />
+                  <Image alt={title} src={firstImageUrl} width="250" height="200" style={{objectFit: "cover"}} />
                 </CardMedia>
                 <CardContent>
                   <Heading variant="h3" component="h2">{title}</Heading>
@@ -46,6 +47,7 @@ const Blog:React.FC<BlogProps>=({ssd=[]}) => {
                 </CardActions>
               </Card>
             </ListItem>
+            
           )})}
         </List>
         </Layout>
