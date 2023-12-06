@@ -2,7 +2,8 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Layout from '@/components/Layout';
 import Heading from '@/components/Heading';
-import Markdown from 'marked-react'
+import Markdown from 'marked-react';
+import {GetStaticProps} from 'next'
 import {
   Card,
   CardMedia, 
@@ -12,17 +13,30 @@ import Paragraph from '@/components/Paragraph';
 import { AllPosts,SinglePost  } from '@/lib/hygraph/queries';
 
 
-interface variantValue{
-  
+interface HeroImage {
+  url: string;
+}
+interface BlogPost {
+  title: string;
+  blogBody: string;
+  heroImage: HeroImage | HeroImage[];
+}
+
+interface BlogPostProps {
+  ssd: BlogPost;
+}
+interface Params {
+  slug:string;
 }
 // const inter = Inter({ subsets: ['latin'] })
 
-export default function BlogPost({ ssd = {} }) {
+export default function BlogPost({ ssd }:BlogPostProps) {
   const {
     title,
     blogBody,
-    heroImage: { url },
+    heroImage
   } = ssd;
+  const imageUrl = Array.isArray(heroImage) ? heroImage[0]?.url : heroImage?.url;
   return (
     <>
       <Head>
@@ -35,7 +49,7 @@ export default function BlogPost({ ssd = {} }) {
         <Heading variant="h2" component="h2">Single Post</Heading>
         <Card component={"article"} sx={{ width: "100%" }}>
           <CardMedia sx={{ display: "grid", placeContent: "center" }}>
-            <Image alt={title} src={url} width="200" height="200" />
+            <Image alt={title} src={imageUrl} width="200" height="200" />
           </CardMedia>
           <CardContent>
             <Heading variant='h2' component="h2">{title}</Heading>
@@ -65,14 +79,14 @@ export const getStaticPaths = async () => {
     })
     .catch((err) => console.log(err));
   console.log('allPosts', allPosts);
-  const paths = allPosts.map((post) => ({
+  const paths = allPosts.map((post:any) => ({
     params: { slug: post.slug },
   }));
 
   return { paths, fallback: false };
 };
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }:{params:Params}) {
   console.log(params);
   const {blog:post} = await fetch(`${process.env.HYGRAPH_ENDPOINT}`, {
     method: "POST",
