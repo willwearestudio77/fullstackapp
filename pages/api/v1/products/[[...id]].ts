@@ -2,7 +2,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import nc from "next-connect";
-
+import { getProducts, addProduct, updateProduct, removeProduct } from '@/lib/api-functions/server/products/controllers'
+const baseRoute = "/api/v1/products/:id?"
 const handler = nc<NextApiRequest, NextApiResponse>({
   onError: (err, req, res, next) => {
     console.error(err.stack);
@@ -11,19 +12,23 @@ const handler = nc<NextApiRequest, NextApiResponse>({
   onNoMatch: (req, res) => {
     res.status(404).end("Page is not found");
   },
+  attachParams:true,
 })
+
   // .use(someMiddleware())
-  .get((req, res) => {
-    res.send("GET");
+  .get(baseRoute,async(req, res) => {
+    getProducts(req,res);
   })
-  .post((req, res) => {
-    res.json({ message: "POST" });
+  .post(baseRoute,async(req, res,next) => {
+    addProduct(req,res,next);
   })
-  .put(async (req, res) => {
-    res.send("PUT");
+  .put(baseRoute,async(req, res,next) => {
+    updateProduct(req,res,next);
   })
-  .delete(async (req, res) => {
-    res.end("DELETE");
+  .delete(baseRoute,async(req, res) => {
+    removeProduct(req,res)
   });
 
 export default handler;
+
+//params not being passed 
