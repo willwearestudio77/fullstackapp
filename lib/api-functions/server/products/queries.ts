@@ -1,4 +1,4 @@
-
+import "@/lib/api-functions/server/db";
 import Product from "@/lib/api-functions/server/products/model";
 //interface for type
 interface ProductData {
@@ -6,7 +6,7 @@ interface ProductData {
   title: string,
   description?: string,
   price: number,
-  quantity: number
+  quantity: number,
 }
 export const fetchProducts = async (query:Record<string,any> = {}):Promise<ProductData[]> => {
   return await Product.find(query).exec();

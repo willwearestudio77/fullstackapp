@@ -1,4 +1,6 @@
 import { addProductSchema, updateProductSchema } from "@/lib/validation/";
+import {DeleteResult,} from 'mongodb'
+import{UpdateWriteOpResult} from 'mongoose'
 import {
   fetchProduct,
   fetchProducts,
@@ -71,8 +73,8 @@ const updateProduct = async (req:NextApiRequest, res:NextApiResponse, isAdmin:bo
   }
 
   try {
-    const result = await update(id, updates);
-    if (result.n === 0) return res.status(404).send({ message: "Not Found" });
+    const result:UpdateWriteOpResult = await update(id, updates);
+    if (result.modifiedCount === 0) return res.status(404).send({ message: "Not Found" });
     return res.status(200).send({ message: "Updated" });
   } catch (err) {
     console.error(err);
@@ -97,8 +99,8 @@ const removeProduct = async (req:NextApiRequest, res:NextApiResponse) => {
   // }
 
   try {
-    const result = await remove(id);
-    if (result.n === 0) return res.status(404).send({ message: "Not Found" });
+    const result:DeleteResult = await remove(id);
+    if (result.deletedCount === 0) return res.status(404).send({ message: "Not Found" });
     res.status(204).end();
   } catch (err) {
     console.error(err);
