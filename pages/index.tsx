@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import { useContext } from 'react';
+import { UIContext } from '@/components/contexts/UIContext';
 // import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { Button, EditIcon } from '@/components/mui/index';
@@ -12,9 +14,13 @@ import { fetchProducts } from "@/lib/api-functions/server/products/queries";
 import { STORAGE_KEY } from "@/lib/tq/products/settings";
 
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const {
+    showMessage
+  }=useContext(UIContext)
   return (
     <>
       <Head>
@@ -26,6 +32,11 @@ export default function Home() {
 
       <Layout>
         <Heading variant="h2" component="h2" >My Shop</Heading>
+        <Button onClick={()=>showMessage({
+          type:'error',
+          string:"wow thats an error"
+        }
+        )}>Show Message</Button>
         <QueryBoundaries>
           <ProductList />
         </QueryBoundaries>
