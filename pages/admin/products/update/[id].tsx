@@ -15,12 +15,12 @@ import { fetchProducts } from "@/lib/api-functions/server/products/queries";
 import { STORAGE_KEY } from "@/lib/tq/products/settings";
 import ProductForm from '@/components/forms/ProductForm';
 import { useUpdate } from '@/lib/tq/products/mutations';
-
+import { fetchProduct } from '@/lib/api-functions/server/products/queries';
 
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function UpdateProduct({ssd}) {
+export default function UpdateProduct({ssd}:any) {
     
     return (
         <>
@@ -39,8 +39,8 @@ export default function UpdateProduct({ssd}) {
         </>
     )
 }
-export async function getServerSideProps() {
-    const product = await fetchProduct(id).catch((err) => console.log(err));
+export async function getServerSideProps({params}:any) {
+    const product = await fetchProduct(params.id).catch((err) => console.log(err));
     console.log("product", product);
     return { props: { ssd: JSON.parse(JSON.stringify(product)) } };
 }

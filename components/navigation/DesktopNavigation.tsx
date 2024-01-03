@@ -1,19 +1,26 @@
 import React from "react";
 import Link from "next/link";
-import{ Box,
+import {
   AppBar,
-   Toolbar,
-  IconButton, 
+  Box,
+  IconButton,
   MenuIcon,
-   Button,
-   Typography } from '@/components/mui/index'
+  Toolbar,
+  Typography,
+  Button,
+} from "@/components/mui";
 import { useTheme } from "@mui/material/styles";
+import { useUser } from "@auth0/nextjs-auth0/client";
+
+
+
 
 function DesktopNavigation({
   handleDrawerToggle = () =>
     console.log("no handleDrawerToggle function provided"),
 }) {
   const theme = useTheme();
+  const { user } = useUser();
   // console.log(theme);
   const lightTextColor = theme.palette.common.white;
   return (
@@ -29,9 +36,10 @@ function DesktopNavigation({
           >
             <MenuIcon />
           </IconButton>
-          <Link href={'/'} passHref>
           <Typography
             variant="h6"
+            component={Link}
+            href={`/`}
             sx={{
               flexGrow: 1,
               display: { xs: "none", sm: "block" },
@@ -39,25 +47,59 @@ function DesktopNavigation({
               color: lightTextColor,
             }}
           >
-            
             Design Shop
           </Typography>
-          </Link>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-          <Link href={'/contact'} passHref>
-            <Button
+            
+            {user && user["https://c13-fs-demo2.vercel.app/admin"] && (
+              <Button
               sx={{ color: lightTextColor }}
+              component={Link}
+              href="/admin"
             >
-              Contact
+              Admin
             </Button>
-            </Link>
-            <Link href={'/blog'} passHref>
+            )}
             <Button
               sx={{ color: lightTextColor }}
+              component={Link}
+              href="/blog"
             >
               Blog
             </Button>
-            </Link>
+            <Button
+              sx={{ color: lightTextColor }}
+              component={Link}
+              href="/contact"
+            >
+              Contact
+            </Button>
+            {user ? (
+              <>
+                <Button
+                  href="/profile"
+                  component={Link}
+                  sx={{ color: lightTextColor }}
+                >
+                  Profile
+                </Button>
+                <Button
+                  href="/api/auth/logout"
+                  component={Link}
+                  sx={{ color: lightTextColor }}
+                >
+                  Log Out
+                </Button>
+              </>
+            ) : (
+              <Button
+                href="/api/auth/login"
+                component={Link}
+                sx={{ color: lightTextColor }}
+              >
+                Log In
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

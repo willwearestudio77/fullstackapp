@@ -21,6 +21,8 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent'
 import CardActions from '@mui/material/CardActions'
 import DeleteIcon from '@mui/icons-material/Delete'
+import Avatar from '@mui/material/Avatar'
+
 
 
 
@@ -28,6 +30,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 
 export{
+    Avatar,
     DeleteIcon,
     Card,
     CardMedia,

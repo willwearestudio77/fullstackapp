@@ -4,6 +4,7 @@ import { QueryClientProvider
  } from "@tanstack/react-query";
 
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import {UserProvider} from "@auth0/nextjs-auth0/client"
 
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
@@ -33,7 +34,7 @@ export default function App({ Component, pageProps }:any) {
   return (
     <>
       <CssBaseline />
-      
+        <UserProvider>
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <ReactQueryDevtools />
@@ -45,6 +46,7 @@ export default function App({ Component, pageProps }:any) {
             </Hydrate>
           </QueryClientProvider>
         </ThemeProvider>
+        </UserProvider>
      
     </>
   );

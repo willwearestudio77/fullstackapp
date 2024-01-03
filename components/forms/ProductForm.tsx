@@ -14,9 +14,11 @@ interface ContactFormProps {
   }) => void;
 }
 interface FormValues {
-  from: string;
-  subject: string;
-  message: string;
+  image: string;
+  title: string;
+  description: string;
+  price:number;
+  quantity:number;
 }
 
 
@@ -44,7 +46,7 @@ if(product){
   } = useForm({
     resolver: yupResolver(schema),
     mode: "onChange",
-    defaultValues: defaults,
+    defaultValues: product || defaults,
   });
 
   useEffect(() => {
